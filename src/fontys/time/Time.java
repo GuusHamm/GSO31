@@ -37,11 +37,11 @@ public class Time implements ITime {
         if (h < 0 || h > 23) {
             throw new IllegalArgumentException("hours must be within 0..23");
         }
-        if (m < 0 || m > 59) {
+        if (min < 0 || min > 59) {
             throw new IllegalArgumentException("minutes must be within 0..59");
         }
         
-        gc = new GregorianCalendar(y, m , d, h, min);
+        gc = new GregorianCalendar(y, m - 1 , d, h, min);
     }
 
     Time(Time t) {
@@ -52,8 +52,6 @@ public class Time implements ITime {
     public DayInWeek getDayInWeek() {
         int day_of_week = gc.get(GregorianCalendar.DAY_OF_WEEK);
         switch (day_of_week) {
-            case GregorianCalendar.SUNDAY:
-                return DayInWeek.SUN;
             case GregorianCalendar.MONDAY:
                 return DayInWeek.MON;
             case GregorianCalendar.TUESDAY:
@@ -67,7 +65,7 @@ public class Time implements ITime {
             case GregorianCalendar.SATURDAY:
                 return DayInWeek.SAT;
             default:
-                return null;
+                return DayInWeek.SUN;
         }
     }
 
@@ -112,6 +110,6 @@ public class Time implements ITime {
     @Override
     public int difference(ITime time) {
         Time t = (Time) time;
-        return (int) ((this.gc.getTimeInMillis() - t.gc.getTimeInMillis()) / 600000);
+        return (int) ((t.gc.getTimeInMillis() - this.gc.getTimeInMillis()) / 60000);
     }
 }
