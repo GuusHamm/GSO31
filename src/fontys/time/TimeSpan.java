@@ -53,7 +53,7 @@ public class TimeSpan implements ITimeSpan {
 
     @Override
     public void setBeginTime(ITime beginTime) {
-        if (beginTime.compareTo(et) >= 0) {
+        if (beginTime.compareTo(et) <= 0) {
             throw new IllegalArgumentException("begin time "
                     + bt + " must be earlier than end time " + et);
         }
@@ -74,7 +74,7 @@ public class TimeSpan implements ITimeSpan {
     @Override
     public void move(int minutes) {
         bt = bt.plus(minutes);
-        et = bt.plus(minutes);
+        et = et.plus(minutes);
     }
 
     @Override
