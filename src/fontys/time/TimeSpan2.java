@@ -16,7 +16,7 @@ public class TimeSpan2 implements ITimeSpan{
         }
 
         this.bt = bt;
-        this.duration = (et.difference(bt));
+        this.duration = (bt.difference(et));
     }
     @Override
     public ITime getBeginTime() {
@@ -32,11 +32,15 @@ public class TimeSpan2 implements ITimeSpan{
     @Override
     public int length() {
 
-        return (int)duration;
+        return -(int)duration;
     }
 
     @Override
     public void setBeginTime(ITime beginTime) {
+        if (beginTime.compareTo(bt.plus((int)duration)) <= 0) {
+            throw new IllegalArgumentException("begin time "
+                    + bt + " must be earlier than end time " + bt.plus((int)duration));
+        }
         bt = beginTime;
     }
 
