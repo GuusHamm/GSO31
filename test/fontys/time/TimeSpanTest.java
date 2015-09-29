@@ -29,6 +29,14 @@ public class TimeSpanTest {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testInstantiateTimeSpan() throws Exception {
+        ITime bt2 = new Time(1970, 3, 1, 1, 1);
+        ITime et2 = new Time(1970, 2, 1, 1, 1);
+        TimeSpan t2 = new TimeSpan(bt2, et2);
+
+    }
+
     @Test
     public void testGetBeginTime() throws Exception {
         setUp();
@@ -52,17 +60,22 @@ public class TimeSpanTest {
     public void testSetBeginTime() throws Exception {
         setUp();
 
-        ITime bt2 = new Time(2016,9,22,20,59);
+        ITime bt2 = new Time(1970, 1, 1, 1, 0);
+        ITime bt3 = new Time(2016,9,22,20,59);
 
         t.setBeginTime(bt2);
+        t.setBeginTime(bt3);
     }
 
     @Test(expected = IllegalArgumentException.class)
      public void testSetEndTime() throws Exception {
         setUp();
-        ITime et2 = new Time(1994, 2, 25, 05, 30);
+
+        ITime et3 = new Time(1964, 2, 25, 05, 30);
+        ITime et2 = new Time(1971, 3, 3, 13, 12);
 
         t.setEndTime(et2);
+        t.setEndTime(et3);
     }
 
     @Test
@@ -92,7 +105,7 @@ public class TimeSpanTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testChangeLengthWith() throws Exception {
         setUp();
 
@@ -101,23 +114,98 @@ public class TimeSpanTest {
 
         assertEquals("Lengte van de vergadering is verlengd", StringFromTime(t.getEndTime()), StringFromTime(et2));
 
+        t.changeLengthWith(-5);
     }
 
     @Test
     public void testIsPartOf() throws Exception {
         setUp();
+        ITime bt2 = new Time(1970, 1, 1, 1, 2);
+        ITime et2 = new Time(1970, 1, 1, 1, 5);
+        TimeSpan ts2 = new TimeSpan(bt2, et2);
 
+        assertTrue("ts2 is deel van t", ts2.isPartOf(t));
     }
 
     @Test
     public void testUnionWith() throws Exception {
         setUp();
+
+        ITime bt5 = new Time(1990, 1, 31, 1, 1);
+        ITime et5 = new Time(1990, 3, 1, 1, 1);
+        ITime bt2 = new Time(1970, 1, 31, 1, 1);
+        ITime et2 = new Time(1970, 3, 1, 1, 1);
+
+        TimeSpan ts2 = new TimeSpan(bt2, et2);
+        //Dit is de actie
+        TimeSpan ts3 = (TimeSpan) t.unionWith(ts2);
+        //Hetzelfde maar dan omgedraait
+        TimeSpan ts5 = (TimeSpan) ts2.unionWith(t);
+        //Dit is het resultaat
+        TimeSpan ts4 = new TimeSpan(bt2, et);
+        //Voor Null terug te krijgen
+        TimeSpan ts6 = new TimeSpan(bt5, et5);
+
+        //Nodig omdat het tijds mechanisme niet goed werkt
+        String TS3 = StringFromTime(ts3.getBeginTime()) + StringFromTime(ts3.getEndTime());
+        String TS4 = StringFromTime(ts4.getBeginTime()) + StringFromTime(ts4.getEndTime());
+        String TS5 = StringFromTime(ts5.getBeginTime()) + StringFromTime(ts5.getEndTime());
+
+        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, TS4);
+        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS5, TS4);
+        assertNull("U krijgt geen Null object terug", t.unionWith(ts6));
     }
 
     @Test
     public void testIntersectionWith() throws Exception {
         setUp();
+
+        //Laatste regel goedkrijgen
+        ITime btNull = new Time(1970, 1, 1, 1, 1);
+        ITime btNull2 = new Time(2000, 1, 1, 1, 1);
+        ITime etNull = new Time(1970, 2, 2, 2, 2);
+        ITime etNull2 = new Time(2000, 2, 2, 2, 2);
+        TimeSpan tis = new TimeSpan(btNull, etNull);
+        TimeSpan tis2 = new TimeSpan(btNull2, etNull2);
+
+        assertNull("U krijgt geen Null terug", tis2.intersectionWith(tis));
+
+
+
+        ITime bt2 = new Time(1970, 1, 1, 1, 2);
+        ITime et2 = new Time(1970, 1, 1, 1, 15);
+        TimeSpan ts2 = new TimeSpan(bt2, et2);
+        TimeSpan ts3 = null;
+        TimeSpan ts5 = null;
+        try {
+            ts3 = (TimeSpan) t.intersectionWith(ts2);
+        }
+        catch (NullPointerException np) {
+            System.out.println("Failed");
+        }
+
+        try {
+            ts5 = (TimeSpan) ts2.intersectionWith(t);
+        }
+        catch (NullPointerException np) {
+            System.out.println("Failed");
+        }
+
+        TimeSpan ts4 = new TimeSpan(bt2, et);
+        if (ts3 != null)
+        {
+            String TS3 = StringFromTime(ts3.getBeginTime()) + StringFromTime(ts3.getEndTime());
+            String TS4 = StringFromTime(ts4.getBeginTime()) + StringFromTime(ts4.getEndTime());
+
+            assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, TS4);
+        }
+
+
+
+
     }
+
+
 
     private String StringFromTime(ITime i)
     {
