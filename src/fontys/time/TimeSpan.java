@@ -35,16 +35,11 @@ public class TimeSpan implements ITimeSpan {
         this.bt = bt;
         this.et = et;
     }
-
-    @Override
-    public ITime getBeginTime() {
-        return bt;
-    }
-
     @Override
     public ITime getEndTime() {
         return et;
     }
+
 
     @Override
     public int length() {
@@ -82,7 +77,7 @@ public class TimeSpan implements ITimeSpan {
         if (minutes <= 0) {
             throw new IllegalArgumentException("length of period must be positive");
         }
-        
+
         et = et.plus(minutes);
     }
 
@@ -97,7 +92,7 @@ public class TimeSpan implements ITimeSpan {
         if (bt.compareTo(timeSpan.getEndTime()) > 0 || et.compareTo(timeSpan.getBeginTime()) < 0) {
             return null;
         }
-        
+
         ITime begintime, endtime;
         if (bt.compareTo(timeSpan.getBeginTime()) < 0) {
             begintime = bt;
@@ -136,5 +131,10 @@ public class TimeSpan implements ITimeSpan {
         }
 
         return new TimeSpan(begintime, endtime);
+    }
+
+    @Override
+    public ITime getBeginTime() {
+        return bt;
     }
 }
