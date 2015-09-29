@@ -11,7 +11,8 @@ import java.util.GregorianCalendar;
 import static org.junit.Assert.*;
 
 /**
- * Created by linux on 22-9-15.
+ * Created by guus on 22-9-15.
+ * @author Guus
  */
 public class TimeTest {
     private int y;
