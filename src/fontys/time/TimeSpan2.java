@@ -76,48 +76,46 @@ public class TimeSpan2 implements ITimeSpan{
 
     @Override
     public ITimeSpan unionWith(ITimeSpan timeSpan) {
-//        if (bt.compareTo(timeSpan.getEndTime()) > 0 || et.compareTo(timeSpan.getBeginTime()) < 0) {
-//            return null;
-//        }
-//
-//        ITime begintime, endtime;
-//        if (bt.compareTo(timeSpan.getBeginTime()) < 0) {
-//            begintime = bt;
-//        } else {
-//            begintime = timeSpan.getBeginTime();
-//        }
-//
-//        if (et.compareTo(timeSpan.getEndTime()) > 0) {
-//            endtime = et;
-//        } else {
-//            endtime = timeSpan.getEndTime();
-//        }
-//
-//        return new TimeSpan(begintime, endtime);
+        if (bt.compareTo(timeSpan.getEndTime()) > 0 || bt.plus((int)duration).compareTo(timeSpan.getBeginTime()) < 0) {
             return null;
+        }
+
+        ITime begintime, endtime;
+        if (bt.compareTo(timeSpan.getBeginTime()) < 0) {
+            begintime = bt;
+        } else {
+            begintime = timeSpan.getBeginTime();
+        }
+
+        if (bt.plus((int)duration).compareTo(timeSpan.getEndTime()) > 0) {
+            endtime = bt.plus((int)duration);
+        } else {
+            endtime = timeSpan.getEndTime();
+        }
+
+        return new TimeSpan(begintime, endtime);
     }
 
     @Override
     public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
 
-//        ITime begintime, endtime;
-//        if (bt.compareTo(timeSpan.getBeginTime()) > 0) {
-//            begintime = bt;
-//        } else {
-//            begintime = timeSpan.getBeginTime();
-//        }
-//
-//        if (et.compareTo(timeSpan.getEndTime()) < 0) {
-//            endtime = et;
-//        } else {
-//            endtime = timeSpan.getEndTime();
-//        }
-//
-//        if (begintime.compareTo(endtime) >= 0) {
-//            return null;
-//        }
-//
-//        return new TimeSpan(begintime, endtime);
-        return null;
+        ITime begintime, endtime;
+        if (bt.compareTo(timeSpan.getBeginTime()) > 0) {
+            begintime = bt;
+        } else {
+            begintime = timeSpan.getBeginTime();
+        }
+
+        if (bt.plus((int)duration).compareTo(timeSpan.getEndTime()) < 0) {
+            endtime = bt.plus((int)duration);
+        } else {
+            endtime = timeSpan.getEndTime();
+        }
+
+        if (begintime.compareTo(endtime) >= 0) {
+            return null;
+        }
+
+        return new TimeSpan(begintime, endtime);
     }
 }
