@@ -47,7 +47,7 @@ public class TimeSpanTest {
     @Test
     public void testGetEndTime() throws Exception {
         setUp();
-        assertEquals("Eind tijd test", t.getEndTime(), et);
+        assertEquals("Eind tijd test", t.getEndTime().compareTo(et), 0);
     }
 
     @Test
@@ -149,11 +149,11 @@ public class TimeSpanTest {
 
         //Nodig omdat het tijds mechanisme niet goed werkt
         String TS3 = StringFromTime(ts3.getBeginTime()) + StringFromTime(ts3.getEndTime());
-        String TS2 = StringFromTime(ts2.getBeginTime()) + StringFromTime(ts2.getEndTime());
+        String T = StringFromTime(t.getBeginTime()) + StringFromTime(t.getEndTime());
         String TS5 = StringFromTime(ts5.getBeginTime()) + StringFromTime(ts5.getEndTime());
 
-        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, TS2);
-        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS5, TS2);
+        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, T);
+        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS5, T);
         assertNull("U krijgt geen Null object terug", ts2.unionWith(ts6));
     }
 

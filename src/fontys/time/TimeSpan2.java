@@ -46,12 +46,13 @@ public class TimeSpan2 implements ITimeSpan{
 
     @Override
     public void setEndTime(ITime endTime) {
-        if (endTime.compareTo(bt) <= 0) {
+        if (endTime.compareTo(bt) > 0) {
             throw new IllegalArgumentException("end time "
                     + duration + " must be later then begin time " + bt);
         }
 
-        duration = endTime.compareTo(bt);
+        duration = bt.difference(endTime);
+        //duration = endTime.compareTo(bt);
     }
 
     @Override
@@ -81,26 +82,6 @@ public class TimeSpan2 implements ITimeSpan{
         }
 
         ITime begintime, endtime;
-        if (bt.compareTo(timeSpan.getBeginTime()) < 0) {
-            begintime = bt;
-        } else {
-            begintime = timeSpan.getBeginTime();
-        }
-
-        if (bt.plus((int)duration).compareTo(timeSpan.getEndTime()) > 0) {
-            endtime = bt.plus((int)duration);
-        } else {
-            endtime = timeSpan.getEndTime();
-        }
-
-        return new TimeSpan(begintime, endtime);
-
-    }
-
-    @Override
-    public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
-
-        ITime begintime, endtime;
         if (bt.compareTo(timeSpan.getBeginTime()) > 0) {
             begintime = bt;
         } else {
@@ -113,15 +94,30 @@ public class TimeSpan2 implements ITimeSpan{
             endtime = timeSpan.getEndTime();
         }
 
-        if (begintime.compareTo(endtime) >= 0) {
+        return new TimeSpan2(begintime, endtime);
+
+    }
+
+    @Override
+    public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
+
+        ITime begintime, endtime;
+        if (bt.compareTo(timeSpan.getBeginTime()) < 0) {
+            begintime = bt;
+        } else {
+            begintime = timeSpan.getBeginTime();
+        }
+
+        if (bt.plus((int)duration).compareTo(timeSpan.getEndTime()) > 0) {
+            endtime = bt.plus((int)duration);
+        } else {
+            endtime = timeSpan.getEndTime();
+        }
+
+        if (begintime.compareTo(endtime) <= 0) {
             return null;
         }
 
-        return new TimeSpan(begintime, endtime);
-    }
-    //Test Methode omdat het tijd mechanisme niet lekker werkt
-    private String StringFromTime(ITime i)
-    {
-        return "Y" + i.getYear() + "M" + i.getMonth() + "D" + i.getDay() + "H" + i.getHours() + "Min" + i.getMinutes();
+        return new TimeSpan2(begintime, endtime);
     }
 }
