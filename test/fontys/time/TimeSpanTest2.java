@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Nekkyou on 22-9-2015.
+ * @author Guus
  */
 public class TimeSpanTest2 {
 
