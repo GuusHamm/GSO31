@@ -12,36 +12,58 @@ import java.util.List;
  */
 public class Contact {
 
+
     private String name;
     private ArrayList appointments;
 
+    /**
+     *
+     * @param name the name of the Contact
+     */
     public Contact(String name) {
         this.name = name;
         appointments = new ArrayList();
     }
 
+    /**
+     *
+     * @return the name  of the contact
+     */
     public String getName(){
 
         return name;
     }
 
-    public Boolean addAppointment(Appointment a){
+    /**
+     *
+     * @param appointment the appointment we want to add
+     * @return if the appointment was not yet in the contacts calender returns true, if it's already there returns false
+     */
+    public Boolean addAppointment(Appointment appointment){
 
-        if (appointments.contains(a))   {
+        if (appointments.contains(appointment))   {
             return false;
         }
         else {
-            appointments.add(a);
+            appointments.add(appointment);
             return true;
         }
     }
 
-    public void removeAppointment(Appointment a){
-        if (appointments.contains(a))   {
-            appointments.remove(a);
+    /**
+     *
+     * @param appointment the appointment we want to remove from the contact
+     */
+    public void removeAppointment(Appointment appointment){
+        if (appointments.contains(appointment))   {
+            appointments.remove(appointment);
         }
     }
 
+    /**
+     *
+     * @return a list of all the appointments of the contact
+     */
     public List<Appointment> appointments(){
         return Collections.unmodifiableList(appointments);
     }
