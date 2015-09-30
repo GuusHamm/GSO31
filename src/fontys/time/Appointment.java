@@ -8,6 +8,7 @@ import java.util.Iterator;
  */
 public class Appointment {
 
+
     private String subject;
     private ITimeSpan timeSpan;
     private ArrayList<Contact> contacten;
@@ -53,14 +54,12 @@ public class Appointment {
      * @return Indien het gelukt is return je true
      */
     public boolean addContact(Contact c) {
-        try {
-            contacten.add(c);
-            return true;
+        for (Contact contact : contacten) {
+            if (contact.getName().matches(c.getName())) {
+                return false;
+            }
         }
-        catch (Exception e) {
-            System.out.println(e.getStackTrace());
-            return false;
-        }
+        return contacten.add(c);
     }
 
     /**
