@@ -70,13 +70,13 @@ public class TimeSpan2 implements ITimeSpan{
 
     @Override
     public boolean isPartOf(ITimeSpan timeSpan) {
-        return (getBeginTime().compareTo(timeSpan.getBeginTime()) >= 0
-                && getEndTime().compareTo(timeSpan.getEndTime()) <= 0);
+        return (getBeginTime().compareTo(timeSpan.getBeginTime()) <= 0
+                && getEndTime().compareTo(timeSpan.getEndTime()) >= 0);
     }
 
     @Override
     public ITimeSpan unionWith(ITimeSpan timeSpan) {
-        if (bt.compareTo(timeSpan.getEndTime()) > 0 || bt.plus((int)duration).compareTo(timeSpan.getBeginTime()) < 0) {
+        if (bt.compareTo(timeSpan.getEndTime()) < 0 || bt.plus((int)duration).compareTo(timeSpan.getBeginTime()) > 0) {
             return null;
         }
 
@@ -94,6 +94,7 @@ public class TimeSpan2 implements ITimeSpan{
         }
 
         return new TimeSpan(begintime, endtime);
+
     }
 
     @Override
@@ -117,5 +118,10 @@ public class TimeSpan2 implements ITimeSpan{
         }
 
         return new TimeSpan(begintime, endtime);
+    }
+    //Test Methode omdat het tijd mechanisme niet lekker werkt
+    private String StringFromTime(ITime i)
+    {
+        return "Y" + i.getYear() + "M" + i.getMonth() + "D" + i.getDay() + "H" + i.getHours() + "Min" + i.getMinutes();
     }
 }
