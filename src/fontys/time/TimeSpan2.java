@@ -2,6 +2,7 @@ package fontys.time;
 
 /**
  * Created by linux on 29-9-15.
+ * @author Guus
  */
 public class TimeSpan2 implements ITimeSpan{
     private ITime bt;

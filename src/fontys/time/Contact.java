@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by linux on 30-9-2015.
+ * @author Guus
  */
 public class Contact {
 

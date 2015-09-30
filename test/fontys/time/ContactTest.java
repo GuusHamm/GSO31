@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by linux on 30-9-15.
+ * @author Guus
  */
 public class ContactTest {
 private String name;
