@@ -39,7 +39,7 @@ public class Contact {
      * @param appointment the appointment we want to add
      * @return if the appointment was not yet in the contacts calender returns true, if it's already there returns false
      */
-    public Boolean addAppointment(Appointment appointment){
+    protected Boolean addAppointment(Appointment appointment){
 
         if (appointments.contains(appointment))   {
             return false;
@@ -54,7 +54,7 @@ public class Contact {
      *
      * @param appointment the appointment we want to remove from the contact
      */
-    public void removeAppointment(Appointment appointment){
+    protected void removeAppointment(Appointment appointment){
         if (appointments.contains(appointment))   {
             appointments.remove(appointment);
         }
