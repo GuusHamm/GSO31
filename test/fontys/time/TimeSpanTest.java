@@ -131,39 +131,39 @@ public class TimeSpanTest {
     public void testUnionWith() throws Exception {
         setUp();
 
-        ITime bt5 = new Time(1990, 1, 31, 1, 1);
-        ITime et5 = new Time(1990, 3, 1, 1, 1);
-        ITime bt2 = new Time(1970, 1, 31, 1, 1);
-        ITime et2 = new Time(1970, 3, 1, 1, 1);
+
+        ITime bt2 = new Time(1970, 1, 1, 1, 2);
+        ITime et2 = new Time(1970, 1, 1, 1, 3);
 
         TimeSpan ts2 = new TimeSpan(bt2, et2);
+
         //Dit is de actie
         TimeSpan ts3 = (TimeSpan) t.unionWith(ts2);
-        //Hetzelfde maar dan omgedraait
+        //Hetzelfde maar dan omgedraait, hier moet hetzelfde uitkomen.
         TimeSpan ts5 = (TimeSpan) ts2.unionWith(t);
-        //Dit is het resultaat
-        TimeSpan ts4 = new TimeSpan(bt2, et);
+
         //Voor Null terug te krijgen
+        ITime bt5 = new Time(1990, 1, 31, 1, 1);
+        ITime et5 = new Time(1990, 3, 1, 1, 1);
         TimeSpan ts6 = new TimeSpan(bt5, et5);
 
         //Nodig omdat het tijds mechanisme niet goed werkt
         String TS3 = StringFromTime(ts3.getBeginTime()) + StringFromTime(ts3.getEndTime());
-        String TS4 = StringFromTime(ts4.getBeginTime()) + StringFromTime(ts4.getEndTime());
+        String TS2 = StringFromTime(ts2.getBeginTime()) + StringFromTime(ts2.getEndTime());
         String TS5 = StringFromTime(ts5.getBeginTime()) + StringFromTime(ts5.getEndTime());
 
-        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, TS4);
-        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS5, TS4);
-        assertNull("U krijgt geen Null object terug", t.unionWith(ts6));
+        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, TS2);
+        assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS5, TS2);
+        assertNull("U krijgt geen Null object terug", ts2.unionWith(ts6));
     }
 
     @Test
     public void testIntersectionWith() throws Exception {
         setUp();
 
-        //Laatste regel goedkrijgen
         ITime btNull = new Time(1970, 1, 1, 1, 1);
         ITime btNull2 = new Time(2000, 1, 1, 1, 1);
-        ITime etNull = new Time(1970, 2, 2, 2, 2);
+        ITime etNull = new Time(1970, 2, 2, 2, 3);
         ITime etNull2 = new Time(2000, 2, 2, 2, 2);
         TimeSpan tis = new TimeSpan(btNull, etNull);
         TimeSpan tis2 = new TimeSpan(btNull2, etNull2);
@@ -173,10 +173,10 @@ public class TimeSpanTest {
 
 
         ITime bt2 = new Time(1970, 1, 1, 1, 2);
-        ITime et2 = new Time(1970, 1, 1, 1, 15);
+        ITime et2 = new Time(1970, 2, 1, 1, 15);
         TimeSpan ts2 = new TimeSpan(bt2, et2);
         TimeSpan ts3 = null;
-        TimeSpan ts5 = null;
+        TimeSpan ts4 = null;
         try {
             ts3 = (TimeSpan) t.intersectionWith(ts2);
         }
@@ -185,19 +185,22 @@ public class TimeSpanTest {
         }
 
         try {
-            ts5 = (TimeSpan) ts2.intersectionWith(t);
+            ts4 = (TimeSpan) ts2.intersectionWith(t);
         }
         catch (NullPointerException np) {
             System.out.println("Failed");
         }
 
-        TimeSpan ts4 = new TimeSpan(bt2, et);
+        //Het verwachte resultaat
+        TimeSpan ts5 = new TimeSpan(bt2, et);
+
+        System.out.println(StringFromTime(ts4.getBeginTime()) + ts4.getEndTime());
         if (ts3 != null)
         {
-            String TS3 = StringFromTime(ts3.getBeginTime()) + StringFromTime(ts3.getEndTime());
-            String TS4 = StringFromTime(ts4.getBeginTime()) + StringFromTime(ts4.getEndTime());
+            String TsActual = StringFromTime(ts3.getBeginTime()) + StringFromTime(ts3.getEndTime());
+            String TsExpected = StringFromTime(ts5.getBeginTime()) + StringFromTime(ts5.getEndTime());
 
-            assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, TS4);
+            assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TsActual, TsExpected);
         }
 
 

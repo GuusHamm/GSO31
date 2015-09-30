@@ -114,40 +114,27 @@ public class TimeSpan implements ITimeSpan {
     public ITimeSpan intersectionWith(ITimeSpan timeSpan) {
 
         ITime begintime, endtime;
-        //Test:
-        System.out.println("bt : " + StringFromTime(bt));
-        System.out.println("bt2: " + StringFromTime(timeSpan.getBeginTime()));
-
-        System.out.println(bt.compareTo(timeSpan.getBeginTime()));
-        System.out.println(timeSpan.getBeginTime().compareTo(bt));
-        //Einde test
         //In dit geval is dit object (bt) groter dan timeSpan.getBeginTime. (dan krijg je True) als ze hetzelfde of als timeSpan groter is dan krijg je false
-        if (bt.compareTo(timeSpan.getBeginTime()) > 0) {
+        //Verandert van > naar <
+        if (bt.compareTo(timeSpan.getBeginTime()) < 0) {
             begintime = bt;
         } else {
             begintime = timeSpan.getBeginTime();
         }
 
-        //Test
-        System.out.println("Begintijd: " + StringFromTime(begintime));
-
-        System.out.println("et : " + StringFromTime(et));
-        System.out.println("et2: " + timeSpan.getEndTime());
-        //Einde test
-
-        if (et.compareTo(timeSpan.getEndTime()) < 0) {
+        //Show beginTime in a readable format
+        System.out.println("Begintime: " + StringFromTime(begintime));
+        //Verandert van < naar >
+        if (et.compareTo(timeSpan.getEndTime()) > 0) {
             endtime = et;
         } else {
             endtime = timeSpan.getEndTime();
         }
 
-        //Test items
-        System.out.println("Begin tijd: " + StringFromTime(begintime));
-        System.out.println("Eind tijd: " + StringFromTime(endtime));
-        System.out.println(begintime.compareTo(endtime));
-        //Einde test items
+        //Show endTime in a readable format
+        System.out.println("Endtime: " + StringFromTime(endtime));
 
-        //Verandert van >= naar <
+        //Verandert van >= naar <=
         if (begintime.compareTo(endtime) <= 0) {
             return null;
         }
