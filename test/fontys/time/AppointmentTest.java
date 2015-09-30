@@ -50,6 +50,8 @@ public class AppointmentTest {
     public void testAddContact() throws Exception {
         setUp();
         Contact c = new Contact("Pietje");
+        Contact c2 = new Contact("Dirk");
+        a.addContact(c2);
         assertTrue("Contact is niet goed toegevoegd", a.addContact(c));
         assertFalse("Contact is toch toegevoegd", a.addContact(c));
     }
