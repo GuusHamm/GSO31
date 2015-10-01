@@ -149,7 +149,7 @@ public class TimeSpanTest {
 
         //Nodig omdat het tijds mechanisme niet goed werkt
         String TS3 = StringFromTime(ts3.getBeginTime()) + StringFromTime(ts3.getEndTime());
-        String T = StringFromTime(t.getBeginTime()) + StringFromTime(t.getEndTime());
+        String T = StringFromTime(t.getBeginTime()) + StringFromTime(ts2.getEndTime());
         String TS5 = StringFromTime(ts5.getBeginTime()) + StringFromTime(ts5.getEndTime());
 
         assertEquals("Je krijgt niet de juiste TimeSpan terug al krijg je deze melding", TS3, T);

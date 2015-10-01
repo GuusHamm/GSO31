@@ -100,7 +100,7 @@ public class TimeSpan implements ITimeSpan {
             begintime = timeSpan.getBeginTime();
         }
 
-        if (et.compareTo(timeSpan.getEndTime()) < 0) {
+        if (et.compareTo(timeSpan.getEndTime()) > 0) {
             endtime = et;
         } else {
             endtime = timeSpan.getEndTime();

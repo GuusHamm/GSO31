@@ -89,7 +89,7 @@ public class TimeSpan2 implements ITimeSpan{
             begintime = timeSpan.getBeginTime();
         }
 
-        if (bt.plus((int)duration).compareTo(timeSpan.getEndTime()) < 0) {
+        if (bt.plus((int)duration).compareTo(timeSpan.getEndTime()) > 0) {
             endtime = bt.plus((int)duration);
         } else {
             endtime = timeSpan.getEndTime();
