@@ -22,7 +22,7 @@ public class BannerController {
 			public void run() {
 				Update();
 			}
-		}, 0 , 2000);
+		}, 0 , 1000);
 	}
 
 	// Stop banner controller
@@ -37,14 +37,18 @@ public void Update() {
 		for (IFonds fonds: koersen)
 		{
             koersenString += fonds.getNaam() + ": ";
-			Double getal = Math.round(fonds.getKoers() * 100d) / 100d;
+			Double getal = fonds.getKoers();
 
 			if (getal < 10)
 			{
 				koersenString += 0;
 			}
 
-			koersenString += Math.round(fonds.getKoers() * 10d) / 10d + ";     ";
+            String koers = String.valueOf(fonds.getKoers());
+            koers = koers.substring(0,koers.lastIndexOf('.')+3);
+
+
+			koersenString += koers + ";     ";
 		}
 		banner.setKoersen(koersenString);
 

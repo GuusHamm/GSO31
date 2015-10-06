@@ -122,17 +122,12 @@ public class TimeSpan implements ITimeSpan {
             begintime = timeSpan.getBeginTime();
         }
 
-        //Show beginTime in a readable format
-        System.out.println("Begintime: " + StringFromTime(begintime));
         //Verandert van < naar >
         if (et.compareTo(timeSpan.getEndTime()) > 0) {
             endtime = et;
         } else {
             endtime = timeSpan.getEndTime();
         }
-
-        //Show endTime in a readable format
-        System.out.println("Endtime: " + StringFromTime(endtime));
 
         //Verandert van >= naar <=
         if (begintime.compareTo(endtime) <= 0) {
@@ -145,11 +140,5 @@ public class TimeSpan implements ITimeSpan {
     @Override
     public ITime getBeginTime() {
         return bt;
-    }
-
-    //Test Methode omdat het tijd mechanisme niet lekker werkt
-    private String StringFromTime(ITime i)
-    {
-        return "Y" + i.getYear() + "M" + i.getMonth() + "D" + i.getDay() + "H" + i.getHours() + "Min" + i.getMinutes();
     }
 }
