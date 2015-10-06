@@ -26,6 +26,9 @@ public class Fonds implements IFonds{
     }
 
     public void setKoers(double modifierDouble){
+        if (koers + modifierDouble < 0) {
+            koers += (modifierDouble * -1);
+        }
         koers += modifierDouble;
     }
 }
