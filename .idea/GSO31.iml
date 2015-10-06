@@ -7,6 +7,11 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Unittests/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Unittests/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/AEX-Banner/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/AEX-Banner/target" />
+      <excludeFolder url="file://$MODULE_DIR$/Unittests" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
     </content>
     <orderEntry type="inheritedJdk" />
