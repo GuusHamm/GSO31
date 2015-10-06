@@ -2,17 +2,27 @@ package main.java;
 
 public class BannerController {
 
-	/**
-	 * 
-	 * @param banner
-	 */
+	private AEXBanner banner;
+	private IEffectenBeurs effectenbeurs;
+	private Timer pollingTimer;
+
 	public BannerController(AEXBanner banner) {
 
+		this.banner = banner;
+		this.effectenbeurs = new MockEffectenbeurs();
+
+		// Start polling timer: update banner every two seconds
+		pollingTimer = new Timer();
+
+		// TODO
 	}
 
+	// Stop banner controller
 	public void stop() {
-		// TODO - implement BannerController.stop
-		throw new UnsupportedOperationException();
+		pollingTimer.cancel();
+		// Stop simulation timer of effectenbeurs
+		// TODO
 	}
+
 
 }

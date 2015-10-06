@@ -6,4 +6,6 @@ public interface IFonds {
 
 	double getKoers();
 
+    void setKoers(double modifier);
+
 }
