@@ -7,15 +7,19 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Nekkyou on 13-10-2015.
  */
 public class RMIServer
 {
-    private static final int portNumber = 1099;
+    private static final int portNumber = 5081;
 
-    private static final String bindingName = "Effectenbeurs";
+    private static final String bindingName = "TestingTest";
+
+    private Timer pollingTimer;
 
     private Registry registry = null;
     private IEffectenbeurs mockEffectenbeurs = null;
@@ -34,6 +38,7 @@ public class RMIServer
 
         //Create registry at port number
         try {
+            System.out.println("Test");
             registry = LocateRegistry.createRegistry(portNumber);
             System.out.println("Server: Registry created on port number " + portNumber);
         }
@@ -53,6 +58,7 @@ public class RMIServer
         {
             e.printStackTrace();
         }
+
     }
 
     // Print IP addresses and network interfaces

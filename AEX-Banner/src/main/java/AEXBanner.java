@@ -18,14 +18,11 @@ public class AEXBanner extends Application {
     private Text text;
     private double textLength;
     private double textPosition;
-    private BannerControllerClient controller;
+    private BannerController controller;
     private AnimationTimer animationTimer;
 
     @Override
     public void start(Stage primaryStage) {
-
-
-
         Font font = new Font("Arial", HEIGHT);
         text = new Text();
         text.setFont(font);
@@ -68,16 +65,8 @@ public class AEXBanner extends Application {
             }
         };
         animationTimer.start();
-        controller = new BannerControllerClient(this);
-        try
-        {
-            Thread.sleep(100);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-        BannerControllerServer server = new BannerControllerServer(this);
+        controller = new BannerController(this);
+
     }
 
     public void setKoersen(String koersen) {
