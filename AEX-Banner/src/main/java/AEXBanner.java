@@ -1,5 +1,3 @@
-package main.java;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.java.BannerController;
 
 public class AEXBanner extends Application {
 
@@ -21,7 +18,7 @@ public class AEXBanner extends Application {
     private Text text;
     private double textLength;
     private double textPosition;
-    private BannerController controller;
+    private BannerControllerClient controller;
     private AnimationTimer animationTimer;
 
     @Override
@@ -71,7 +68,16 @@ public class AEXBanner extends Application {
             }
         };
         animationTimer.start();
-        controller = new BannerController(this);
+        controller = new BannerControllerClient(this);
+        try
+        {
+            Thread.sleep(100);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        BannerControllerServer server = new BannerControllerServer(this);
     }
 
     public void setKoersen(String koersen) {

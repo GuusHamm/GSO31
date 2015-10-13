@@ -1,11 +1,13 @@
-package main.java;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Effectenbeurs implements IEffectenbeurs {
+public class Effectenbeurs implements IEffectenbeurs, Serializable
+{
+    private ArrayList<IFonds> fondsen;
+
     @Override
     public ArrayList<IFonds> getKoersen() {
-        return null;
+        return fondsen;
     }
 }

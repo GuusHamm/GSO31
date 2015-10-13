@@ -1,10 +1,9 @@
-package main.java;
-
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 
-public interface IEffectenbeurs {
-
-	ArrayList<IFonds> getKoersen();
+public interface IEffectenbeurs extends Remote
+{
+	ArrayList<IFonds> getKoersen() throws RemoteException;
 
 }

@@ -1,6 +1,7 @@
-package main.java;
+import java.io.Serializable;
 
-public interface IFonds {
+public interface IFonds extends Serializable
+{
 
 	String getNaam();
 

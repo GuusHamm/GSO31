@@ -1,11 +1,10 @@
-package main.java;
-
 import java.util.Random;
 
 /**
  * Created by linux on 6-10-15.
  */
-public class Fonds implements IFonds{
+public class Fonds implements IFonds
+{
     private String naam;
     private double koers;
 
