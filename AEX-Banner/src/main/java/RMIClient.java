@@ -17,7 +17,8 @@ public class RMIClient
 
     // References to registry and student administration
     private Registry registry = null;
-    private BannerController bannerController = null;
+    private BannerController bannerController;
+    private IEffectenbeurs effectenbeurs = null;
 
     // Constructor
     public RMIClient(String ipAddress, int portNumber, BannerController bc)
@@ -58,7 +59,8 @@ public class RMIClient
                 {
                     try
                     {
-                        bannerController.setEffectenbeurs((IEffectenbeurs) registry.lookup(bindingName));
+                        effectenbeurs = (IEffectenbeurs) registry.lookup(bindingName);
+                        bannerController.setEffectenbeurs(effectenbeurs);
                     }
                     catch (RemoteException ex)
                     {
@@ -78,12 +80,13 @@ public class RMIClient
 
 
         // Print result binding student administration
-        if (bannerController != null)
+        if (effectenbeurs != null)
         {
             System.out.println("Client: Effectenbeurs bound");
         }
         else
         {
+            System.out.println();
             System.out.println("Client: IEffectenbeurs is null pointer");
         }
 

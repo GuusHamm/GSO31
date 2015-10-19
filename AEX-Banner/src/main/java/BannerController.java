@@ -11,12 +11,16 @@ public class BannerController
     private RMIClient client;
 
 	public BannerController(AEXBanner banner) {
-        client = new RMIClient("145.93.240.139", 5081, this);
+        this.banner = banner;
+        client = new RMIClient("145.93.240.77", 5081, this);
+//        client = new RMIClient("145.93.240.139", 5081, this);
 
         pollingTimer = new Timer();
-        pollingTimer.schedule(new TimerTask() {
+        pollingTimer.schedule(new TimerTask()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 try
                 {
                     Update();
@@ -25,8 +29,11 @@ public class BannerController
                 {
                     e.printStackTrace();
                 }
+//                catch (Exception e) {
+//                    return;
+//                }
             }
-        }, 0 , 1000);
+        }, 0, 1000);
 
     }
 
@@ -35,29 +42,38 @@ public class BannerController
 	public void stop() {
 		pollingTimer.cancel();
 	}
-public void Update() throws RemoteException{
-    ArrayList<IFonds> koersen = client.getEffectenbeurs().getKoersen();
-	String koersenString = "";
-	if (koersen	 != null)
-    {
-        for (IFonds fonds: koersen)
-        {
-            koersenString += fonds.getNaam() + ": ";
-            Double getal = fonds.getKoers();
 
-            if (getal < 10)
-            {
-                koersenString += 0;
-            }
+    public void Update() throws RemoteException{
 
-            String koers = String.valueOf(fonds.getKoers());
-            koers = koers.substring(0,koers.lastIndexOf('.')+3);
-
-            koersenString += koers + ";     ";
+        ArrayList<IFonds> koersen = new ArrayList<IFonds>();
+		try {
+            koersen  = client.getEffectenbeurs().getKoersen();
         }
-        banner.setKoersen(koersenString);
+        catch (Exception e) {
+            return;
+        }
+
+        String koersenString = "";
+        if (koersen	 != null)
+        {
+            for (IFonds fonds: koersen)
+            {
+                koersenString += fonds.getNaam() + ": ";
+                Double getal = fonds.getKoers();
+
+                if (getal < 10)
+                {
+                    koersenString += 0;
+                }
+
+                String koers = String.valueOf(fonds.getKoers());
+                koers = koers.substring(0,koers.lastIndexOf('.')+3);
+
+                koersenString += koers + ";     ";
+            }
+            banner.setKoersen(koersenString);
+        }
     }
-}
 
     public void setEffectenbeurs(IEffectenbeurs effectenbeurs) {
         this.effectenbeurs = effectenbeurs;
