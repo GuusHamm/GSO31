@@ -65,7 +65,8 @@ public class MockEffectenbeurs  extends UnicastRemoteObject implements IEffecten
         for (IFonds f : fondsen)
         {
             double modifier = (r.nextInt(4)-2)+r.nextDouble();
-            f.setKoers(modifier);
+            Fonds fonds = (Fonds)f;
+            fonds.setKoers(modifier);
         }
     }
 

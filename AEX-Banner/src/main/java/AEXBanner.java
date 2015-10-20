@@ -8,12 +8,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
+
 public class AEXBanner extends Application {
 
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 100;
-    public static final int NANO_TICKS = 15000000;// FRAME_RATE = 1000000000/NANO_TICKS = 50;
-    public final double textSpeed = 12;
+    public static final int NANO_TICKS = 20000000;// FRAME_RATE = 1000000000/NANO_TICKS = 50;
+    public final double textSpeed = 5;
 
     private Text text;
     private double textLength;
@@ -48,13 +50,16 @@ public class AEXBanner extends Application {
                 if (lag >= NANO_TICKS) {
                     // calculate new location of text
                     textPosition -= textSpeed;
+                    prevUpdate = now;
+                    text.relocate(textPosition,0);
                 }
 
                 if (textPosition + textLength < 0) {
                     textPosition = 1000;
+                    text.relocate(textPosition,0);
                 }
-                text.relocate(textPosition,0);
-                prevUpdate = now;
+
+
             }
             @Override
             public void start() {
@@ -65,11 +70,15 @@ public class AEXBanner extends Application {
             }
         };
         animationTimer.start();
-        controller = new BannerController(this);
+        try {
+            controller = new BannerController(this);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public void setKoersen(String koersen) {
+    public void setKoersen(final String koersen) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

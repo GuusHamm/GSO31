@@ -1,18 +1,20 @@
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BannerController
+public class BannerController extends UnicastRemoteObject implements IBanner
 {
 	private AEXBanner banner;
 	private IEffectenbeurs effectenbeurs;
 	private Timer pollingTimer;
     private RMIClient client;
 
-	public BannerController(AEXBanner banner) {
+	public BannerController(AEXBanner banner) throws RemoteException {
+        super();
         this.banner = banner;
-        client = new RMIClient("145.93.240.77", 5081, this);
+        client = new RMIClient("145.93.240.101", 5081, this);
 //        client = new RMIClient("145.93.240.139", 5081, this);
 
         pollingTimer = new Timer();
@@ -82,5 +84,10 @@ public class BannerController
     public IEffectenbeurs getEffectenbeurs()
     {
         return effectenbeurs;
+    }
+
+    @Override
+    public void setKoersen() {
+
     }
 }

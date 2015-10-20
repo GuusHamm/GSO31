@@ -7,6 +7,4 @@ public interface IFonds extends Serializable
 
 	double getKoers();
 
-    void setKoers(double modifier);
-
 }
