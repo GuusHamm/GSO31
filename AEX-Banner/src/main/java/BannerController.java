@@ -87,15 +87,17 @@ public class BannerController extends UnicastRemoteObject implements IBanner
         return effectenbeurs;
     }
 
-    @Override
-    public void setKoersen(ArrayList<IFonds> fondsen) {
-        koersen = fondsen;
-    }
 
     @Override
     public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException
     {
         //TODO als een property verandert.
-        setKoersen((ArrayList<IFonds>) propertyChangeEvent.getNewValue());
+//        setKoersen((ArrayList<IFonds>) propertyChangeEvent.getNewValue());
+    }
+
+
+    @Override
+    public ArrayList<IFonds> setKoersen() {
+        return null;
     }
 }
