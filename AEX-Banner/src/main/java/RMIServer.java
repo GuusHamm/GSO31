@@ -23,13 +23,11 @@ public class RMIServer
 
     private Registry registry = null;
     private IEffectenbeurs mockEffectenbeurs = null;
-    private fontys.observer.BasicPublisher publisher = null;
+
 
     public RMIServer() {
         System.out.println("Server: Port number  " + portNumber);
-        String[] properties = new String[1];
-        properties[0] = "fondsen";
-        publisher = new fontys.observer.BasicPublisher(properties);
+
         try {
             mockEffectenbeurs = new MockEffectenbeurs();
             System.out.println("Server: MockEffectenbeurs created");

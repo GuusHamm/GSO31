@@ -16,8 +16,12 @@ public class BannerController extends UnicastRemoteObject implements IBanner
 	public BannerController(AEXBanner banner) throws RemoteException {
         super();
         this.banner = banner;
-        client = new RMIClient("145.93.240.101", 5081, this);
+        client = new RMIClient("145.93.58.174", 5081, this);
 //        client = new RMIClient("145.93.240.139", 5081, this);
+
+
+
+        //TODO subscribe this BannerController
 
         pollingTimer = new Timer();
         pollingTimer.schedule(new TimerTask()
@@ -87,17 +91,19 @@ public class BannerController extends UnicastRemoteObject implements IBanner
         return effectenbeurs;
     }
 
+    public void addListener() throws RemoteException{
+        effectenbeurs.addListener(this,"fondsen");
+    }
 
     @Override
-    public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException
-    {
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException    {
         //TODO als een property verandert.
-//        setKoersen((ArrayList<IFonds>) propertyChangeEvent.getNewValue());
+        setKoersen((ArrayList<IFonds>) propertyChangeEvent.getNewValue());
     }
 
 
     @Override
-    public ArrayList<IFonds> setKoersen() {
-        return null;
+    public void setKoersen(ArrayList<IFonds> fondsen) {
+        koersen = fondsen;
     }
 }

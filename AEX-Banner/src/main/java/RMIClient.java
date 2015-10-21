@@ -50,33 +50,55 @@ public class RMIClient
         }
 
 
-        // Bind student administration using registry
-        pollingTimer = new Timer();
-        pollingTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (registry != null)
-                {
-                    try
-                    {
-                        effectenbeurs = (IEffectenbeurs) registry.lookup(bindingName);
-                        bannerController.setEffectenbeurs(effectenbeurs);
-                    }
-                    catch (RemoteException ex)
-                    {
-                        System.out.println("Client: Cannot bind student administration");
-                        System.out.println("Client: RemoteException: " + ex.getMessage());
-                        bannerController = null;
-                    }
-                    catch (NotBoundException ex)
-                    {
-                        System.out.println("Client: Cannot bind student administration");
-                        System.out.println("Client: NotBoundException: " + ex.getMessage());
-                        bannerController = null;
-                    }
-                }
+        if (registry != null)
+        {
+            try
+            {
+                effectenbeurs = (IEffectenbeurs) registry.lookup(bindingName);
+                bannerController.setEffectenbeurs(effectenbeurs);
+                bannerController.addListener();
             }
-        }, 0 , 1000);
+            catch (RemoteException ex)
+            {
+                System.out.println("Client: Cannot bind student administration");
+                System.out.println("Client: RemoteException: " + ex.getMessage());
+                bannerController = null;
+            }
+            catch (NotBoundException ex)
+            {
+                System.out.println("Client: Cannot bind student administration");
+                System.out.println("Client: NotBoundException: " + ex.getMessage());
+                bannerController = null;
+            }
+        }
+
+        // Bind student administration using registry
+//        pollingTimer = new Timer();
+//        pollingTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                if (registry != null)
+//                {
+//                    try
+//                    {
+//                        effectenbeurs = (IEffectenbeurs) registry.lookup(bindingName);
+//                        bannerController.setEffectenbeurs(effectenbeurs);
+//                    }
+//                    catch (RemoteException ex)
+//                    {
+//                        System.out.println("Client: Cannot bind student administration");
+//                        System.out.println("Client: RemoteException: " + ex.getMessage());
+//                        bannerController = null;
+//                    }
+//                    catch (NotBoundException ex)
+//                    {
+//                        System.out.println("Client: Cannot bind student administration");
+//                        System.out.println("Client: NotBoundException: " + ex.getMessage());
+//                        bannerController = null;
+//                    }
+//                }
+//            }
+//        }, 0 , 1000);
 
 
         // Print result binding student administration
