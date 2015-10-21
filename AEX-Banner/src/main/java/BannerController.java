@@ -1,3 +1,4 @@
+import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class BannerController extends UnicastRemoteObject implements IBanner
 	private IEffectenbeurs effectenbeurs;
 	private Timer pollingTimer;
     private RMIClient client;
+    ArrayList<IFonds> koersen;
 
 	public BannerController(AEXBanner banner) throws RemoteException {
         super();
@@ -47,7 +49,6 @@ public class BannerController extends UnicastRemoteObject implements IBanner
 
     public void Update() throws RemoteException{
 
-        ArrayList<IFonds> koersen = new ArrayList<IFonds>();
 		try {
             koersen  = client.getEffectenbeurs().getKoersen();
         }
@@ -87,7 +88,14 @@ public class BannerController extends UnicastRemoteObject implements IBanner
     }
 
     @Override
-    public void setKoersen() {
+    public void setKoersen(ArrayList<IFonds> fondsen) {
+        koersen = fondsen;
+    }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException
+    {
+        //TODO als een property verandert.
+        setKoersen((ArrayList<IFonds>) propertyChangeEvent.getNewValue());
     }
 }
