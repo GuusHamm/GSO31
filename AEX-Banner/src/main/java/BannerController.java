@@ -16,49 +16,76 @@ public class BannerController extends UnicastRemoteObject implements IBanner
 	public BannerController(AEXBanner banner) throws RemoteException {
         super();
         this.banner = banner;
-        client = new RMIClient("145.93.58.174", 5081, this);
+        client = new RMIClient("145.93.56.177", 5081, this);
 //        client = new RMIClient("145.93.240.139", 5081, this);
 
 
 
         //TODO subscribe this BannerController
-
-        pollingTimer = new Timer();
-        pollingTimer.schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    Update();
-                }
-                catch (RemoteException e)
-                {
-                    e.printStackTrace();
-                }
-//                catch (Exception e) {
-//                    return;
-//                }
-            }
-        }, 0, 1000);
+//
+//        pollingTimer = new Timer();
+//        pollingTimer.schedule(new TimerTask()
+//        {
+//            @Override
+//            public void run()
+////            {
+////                try
+////                {
+//////                    Update();
+////                }
+////                catch (RemoteException e)
+////                {
+////                    e.printStackTrace();
+////                }
+////                catch (Exception e) {
+////                    return;
+////                }
+//            }
+//        }, 0, 1000);
 
     }
 
 
 	// Stop banner controller
-	public void stop() {
+	public void stop() throws RemoteException {
 		pollingTimer.cancel();
+		effectenbeurs.removeListener(this,"fondsen");
 	}
 
-    public void Update() throws RemoteException{
+    public void Update() throws RemoteException {
 
-		try {
-            koersen  = client.getEffectenbeurs().getKoersen();
-        }
-        catch (Exception e) {
+        try {
+            koersen = client.getEffectenbeurs().getKoersen();
+        } catch (Exception e) {
             return;
         }
+
+    }
+
+    public void setEffectenbeurs(IEffectenbeurs effectenbeurs) {
+        this.effectenbeurs = effectenbeurs;
+    }
+
+    public IEffectenbeurs getEffectenbeurs()
+    {
+        return effectenbeurs;
+    }
+
+    public void addListener() throws RemoteException{
+        effectenbeurs.addListener(this,"fondsen");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException    {
+        //TODO als een property verandert.
+        setKoersen((ArrayList<IFonds>) propertyChangeEvent.getNewValue());
+
+    }
+
+
+    @Override
+    public void setKoersen(ArrayList<IFonds> fondsen) {
+        koersen = fondsen;
 
         String koersenString = "";
         if (koersen	 != null)
@@ -81,29 +108,4 @@ public class BannerController extends UnicastRemoteObject implements IBanner
             banner.setKoersen(koersenString);
         }
     }
-
-    public void setEffectenbeurs(IEffectenbeurs effectenbeurs) {
-        this.effectenbeurs = effectenbeurs;
     }
-
-    public IEffectenbeurs getEffectenbeurs()
-    {
-        return effectenbeurs;
-    }
-
-    public void addListener() throws RemoteException{
-        effectenbeurs.addListener(this,"fondsen");
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException    {
-        //TODO als een property verandert.
-        setKoersen((ArrayList<IFonds>) propertyChangeEvent.getNewValue());
-    }
-
-
-    @Override
-    public void setKoersen(ArrayList<IFonds> fondsen) {
-        koersen = fondsen;
-    }
-}
